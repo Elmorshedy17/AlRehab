@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "608767502616",
+    "project_id": "alrehab-f0c92",
+    "storage_bucket": "alrehab-f0c92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608767502616:android:2ad77ea07d83776054966d",
+        "android_client_info": {
+          "package_name": "rehab.developkw.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608767502616-1fm7djksqbd32bh7hs79su3ep1a251a9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "rehab.developkw.com",
+            "certificate_hash": "8444e5a38aedc97aee084bdfb09af62c7c5938b9"
+          }
+        },
+        {
+          "client_id": "608767502616-7lohqphlf469jt8hcropcfchgo4raqel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXjFHWgE4A0ZYB8kNgOINwrKUPbKF9-Zc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608767502616-7lohqphlf469jt8hcropcfchgo4raqel.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
