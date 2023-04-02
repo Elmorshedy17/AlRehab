@@ -11,13 +11,15 @@ import 'package:rxdart/rxdart.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeSlider extends StatefulWidget {
+  List<SliderService>? slider;
   // final List<SliderAndService>? sliderList;
   final int sliderDuration;
   final bool isCard;
   // final double sliderHeight;
   final bool hasUrl;
-  const HomeSlider(
+   HomeSlider(
       {Key? key,
+        this.slider,
         this.sliderDuration = 1,
         // this.sliderList,
         this.isCard = true,
@@ -41,153 +43,146 @@ class _HomeSliderState extends State<HomeSlider> {
   //   'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/archer-home-designs-dining-table-1594830125.jpg?crop=0.657xw:1.00xh;0.0986xw,0&resize=768:*'
   // ];
 
-  @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      context.use<HomeManager>().execute();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   SchedulerBinding.instance.addPostFrameCallback((_) {
+  //     context.use<HomeManager>().execute();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final homeManager = context.use<HomeManager>();
+    // final homeManager = context.use<HomeManager>();
 
-    return Observer<HomeResponse>(
-        stream: homeManager.home$,
-        onRetryClicked: homeManager.execute,
-        onWaiting: (_) => const SizedBox.shrink(),
-        onError: (_, __) => const SizedBox.shrink(),
-        onSuccess: (context, homeSnapshot) {
-          return Container(
-              child:
-              // (widget.sliderList != null)
-              //     ?
-              homeSnapshot.data!.slider!.isNotEmpty?    Stack(
+    return Container(
+        child:
+        // (widget.sliderList != null)
+        //     ?
+        widget.slider!.isNotEmpty?    Stack(
+          children: [
+            SizedBox(
+              height:  150.h,
+              width: MediaQuery.of(context).size.width,
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  // autoPlay: widget.sliderList!.length > 1,
+                    autoPlay:  widget.slider!.length > 1,
+                    enlargeCenterPage: false,
+                    aspectRatio: 2,
+                    viewportFraction: 1,
+                    disableCenter: true,
+                    onPageChanged: (index, reason) {
+                      inIndicatorIndex.add(index);
+                    }),
+                // items: widget.sliderList!
+                items:  widget.slider!
+                    .map(
+                      (e) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    // child: Card(
+                    //     elevation: widget.isCard ? 4.0 : 0.0,
+                    // shape: const RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.all(
+                    //     Radius.circular(10.0),
+                    //   ),
+                    // ),
+                    child: Container(
+                      padding: EdgeInsets.all(widget.isCard ? 0.0 : 0.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: ClipRRect(
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(20)),
+                        // const BorderRadius.all(Radius.circular(0)),
+                        child: InkWell(
+                          onTap: () {
+                            if (e.link?.isNotEmpty ?? false) {
+                              openURL("${e.link}");
+                            }
+                          },
+                          child: NetworkAppImage(
+                            boxFit: BoxFit.fill,
+                            // imageUrl: '${e.image}',
+                            imageUrl: '${e.image}',
+                          ),
+                        ),
+                      ),
+                    ),
+                    // ),
+                  ),
+                )
+                    .toList(),
+              ),
+            ),
+            Positioned(
+              bottom: 7,
+              left: 0,
+              right: 0,
+              child: Column(
                 children: [
-                  SizedBox(
-                    height:  150.h,
-                    width: MediaQuery.of(context).size.width,
-                    child: CarouselSlider(
-                      options: CarouselOptions(
-                        // autoPlay: widget.sliderList!.length > 1,
-                          autoPlay: homeSnapshot.data!.slider!.length > 1,
-                          enlargeCenterPage: false,
-                          aspectRatio: 2,
-                          viewportFraction: 1,
-                          disableCenter: true,
-                          onPageChanged: (index, reason) {
-                            inIndicatorIndex.add(index);
-                          }),
-                      // items: widget.sliderList!
-                      items: homeSnapshot.data!.slider!
-                          .map(
-                            (e) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 0),
-                          // child: Card(
-                          //     elevation: widget.isCard ? 4.0 : 0.0,
-                          // shape: const RoundedRectangleBorder(
-                          //   borderRadius: BorderRadius.all(
-                          //     Radius.circular(10.0),
-                          //   ),
-                          // ),
-                          child: Container(
-                            padding: EdgeInsets.all(widget.isCard ? 0.0 : 0.0),
-                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: ClipRRect(
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
-                              // const BorderRadius.all(Radius.circular(0)),
-                              child: InkWell(
-                                onTap: () {
-                                  if (e.link?.isNotEmpty ?? false) {
-                                    openURL("${e.link}");
-                                  }
-                                },
-                                child: NetworkAppImage(
-                                  boxFit: BoxFit.fill,
-                                  // imageUrl: '${e.image}',
-                                  imageUrl: '${e.image}',
-                                ),
-                              ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          openURL("http://alrahabcoop-kw.com");
+                          // http://dahmnstore.com/
+                        },
+                        child:const Card(
+                          elevation: 4,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                            child: Center(
+                              child: Text("تسوق الان"),
                             ),
                           ),
-                          // ),
                         ),
-                      )
-                          .toList(),
-                    ),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    bottom: 7,
-                    left: 0,
-                    right: 0,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: (){
-                                openURL("http://alrahabcoop-kw.com");
-                                // http://dahmnstore.com/
-                              },
-                              child:const Card(
-                                elevation: 4,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                                  child: Center(
-                                    child: Text("تسوق الان"),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  StreamBuilder(
+                      initialData: 0,
+                      stream: indicatorIndex$,
+                      builder: (context, indexSnapshot) {
+                        return SizedBox(
                           height: 7,
-                        ),
-                        StreamBuilder(
-                            initialData: 0,
-                            stream: indicatorIndex$,
-                            builder: (context, indexSnapshot) {
-                              return SizedBox(
-                                height: 7,
-                                child: Center(
-                                  child: ListView.builder(
-                                      shrinkWrap: true,
-                                      // itemCount: widget.sliderList!.length,
-                                      itemCount: homeSnapshot.data!.slider!.length > 1
-                                          ? homeSnapshot.data!.slider!.length
-                                          : 0,
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                            color: indexSnapshot.data == index
-                                                ? AppStyle.darkOrange
-                                                : AppStyle.darkOrange.withOpacity(0.5),
-                                            // : AppStyle.orange.withOpacity(0.5),
-                                            borderRadius: BorderRadius.circular(20.0),
-                                          ),
-                                          // height: 4,
-                                          width: indexSnapshot.data == index ? 30 : 12,
-                                          margin:
-                                          const EdgeInsets.symmetric(horizontal: 3),
-                                          // padding: EdgeInsets.symmetric(horizontal: 5),
-                                        );
-                                      }),
-                                ),
-                              );
-                            }),
-                      ],
-                    ),
-                  )
+                          child: Center(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                // itemCount: widget.sliderList!.length,
+                                itemCount:  widget.slider!.length > 1
+                                    ?  widget.slider!.length
+                                    : 0,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: indexSnapshot.data == index
+                                          ? AppStyle.darkOrange
+                                          : AppStyle.darkOrange.withOpacity(0.5),
+                                      // : AppStyle.orange.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    // height: 4,
+                                    width: indexSnapshot.data == index ? 30 : 12,
+                                    margin:
+                                    const EdgeInsets.symmetric(horizontal: 3),
+                                    // padding: EdgeInsets.symmetric(horizontal: 5),
+                                  );
+                                }),
+                          ),
+                        );
+                      }),
                 ],
-              ):const SizedBox()
-            // : Container(),
-          );
-        });
+              ),
+            )
+          ],
+        ):const SizedBox()
+      // : Container(),
+    );
   }
 
   @override

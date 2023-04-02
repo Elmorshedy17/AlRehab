@@ -252,8 +252,8 @@ class _rehabState extends State<rehab> {
                 // }
               },
 
-              home: const HomePage(),
-              // home: const AppStartPage(),
+              // home: const HomePage(),
+              home: const AppStartPage(),
 
               routes: Routes.routes,
             ),

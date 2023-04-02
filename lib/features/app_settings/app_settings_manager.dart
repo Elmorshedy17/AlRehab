@@ -10,7 +10,7 @@ class AppSettingsManager extends Manager<AppSettingsResponse> {
   String profitText = "";
 
   final PublishSubject<AppSettingsResponse> _subject =
-      PublishSubject<AppSettingsResponse>();
+  PublishSubject<AppSettingsResponse>();
   Stream<AppSettingsResponse> get settings$ => _subject.stream;
 
   AppSettingsManager() {
@@ -35,12 +35,16 @@ class AppSettingsManager extends Manager<AppSettingsResponse> {
               .pushReplacementNamedTo(AppRoutesNames.introPage);
           return;
         }
-        // if (result.data?.setting?.ads == 1) {
-        //   locator<NavigationService>().pushReplacementNamedTo(
-        //       AppRoutesNames.adsPage,
-        //       arguments: AdsArgs(ads: result.data?.ads));
-        //   return;
-        // }
+
+        if(result.data?.setting?.ads != null){
+          if (int.tryParse("${result.data?.setting?.ads}")! > 0) {
+            locator<NavigationService>().pushReplacementNamedTo(
+                AppRoutesNames.adsPage,
+                arguments: AdsArgs(ads: result.data?.ads));
+            return;
+          }
+        }
+
 
         locator<NavigationService>()
             .pushReplacementNamedTo(AppRoutesNames.HomePage);
@@ -67,6 +71,6 @@ class AppSettingsManager extends Manager<AppSettingsResponse> {
   @override
   void dispose() {}
 
-  // late AnimationController innerController;
-  // late AnimationController outerController;
+// late AnimationController innerController;
+// late AnimationController outerController;
 }
