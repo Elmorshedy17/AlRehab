@@ -118,14 +118,14 @@ class FixedSection {
 
   static List<FixedSection> homeSectionsSlider = [
 
-    // FixedSection(
-    //   title: 'مجلس الإدارة',
-    //   image: AppAssets.home_7,
-    //   backgroundColor: const Color(0xffB0D0F6),
-    //   onClick: () {
-    //     locator<NavigationService>().pushNamedTo(AppRoutesNames.managementPage);
-    //   },
-    // ),
+    FixedSection(
+      title: 'مجلس الإدارة',
+      image: AppAssets.home_7,
+      backgroundColor: const Color(0xffB0D0F6),
+      onClick: () {
+        locator<NavigationService>().pushNamedTo(AppRoutesNames.managementPage);
+      },
+    ),
 
     FixedSection(
       title: 'أرباح المساهمين',
