@@ -127,7 +127,7 @@ class _HomeSliderState extends State<HomeSlider> {
                           children: [
                             InkWell(
                               onTap: (){
-                                openURL("http://alrahabcoop-kw.com");
+                                openURL("https://alrahabcoop-kw.com/");
                                 // http://dahmnstore.com/
                               },
                               child:const Card(

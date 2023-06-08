@@ -119,7 +119,7 @@ class _BookingWebViewPageState extends State<BookingWebViewPage> {
                         javascriptMode: JavascriptMode.unrestricted,
                         onPageFinished: (url) async {
                           log('OOoOO $url');
-                          if (url.startsWith('http://alrahabcoop-kw.com/')) {
+                          if (url.startsWith('https://alrahabcoop-kw.com//')) {
                             isLoading.value = true;
                             await PaymentGatWay.paymentResponse(url)
                                 .then((result) {
